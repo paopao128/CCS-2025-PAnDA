@@ -1,9 +1,9 @@
 %% Header
 addpath('./functions/');                                                    % Functions
-addpath('./functions/myRLToolbox');                                         % My reinforcement learning toolbox
+addpath('./Dataset/'); 
 addpath('./functions/myBDToolbox');                                         % My Benders decomposition toolbox
 addpath('./functions/myPlotToolbox');                                       % My plot toolbox
-addpath('./functions/haversine');                                           % Read the Haversine distance package. This package is created by Created by Josiah Renfree, May 27, 2010
+addpath('./functions/haversine');                                          % Read the Haversine distance package. This package is created by Created by Josiah Renfree, May 27, 2010
 parameters;                                                                 % Read the parameters of the simulation
 env_parameters.NR_NODE_IN_TARGET=num_rec(id_num_rec);
 fprintf('number of nodes is %d, id_repeat_times: %d \n', env_parameters.NR_NODE_IN_TARGET, id_repeat_times);
@@ -11,22 +11,9 @@ fprintf('number of nodes is %d, id_repeat_times: %d \n', env_parameters.NR_NODE_
 
 %% Read the map information
 %fprintf("Loading the map information ... \n")
-opts = detectImportOptions('./Dataset/rome/raw/rome_nodes.csv');
-opts = setvartype(opts, 'osmid', 'int64');
-df_nodes = readtable('./Dataset/rome/raw/rome_nodes.csv', opts);
-df_edges = readtable('./Dataset/rome/raw/rome_edges.csv');
+load('rome_df_nodes.mat');
+load('rome_df_edges.mat');
 
-% opts = detectImportOptions('./Dataset/nyc/raw/nyc_nodes.csv');
-% opts = setvartype(opts, 'osmid', 'int64');
-% df_nodes = readtable('./Dataset/nyc/raw/nyc_nodes.csv', opts);
-% df_edges = readtable('./Dataset/nyc/raw/nyc_edges.csv');
-
-% opts = detectImportOptions('./Dataset/london/raw/london_nodes.csv');
-% opts = setvartype(opts, 'osmid', 'int64');
-% df_nodes = readtable('./Dataset/london/raw/london_nodes.csv', opts);
-% df_edges = readtable('./Dataset/london/raw/london_edges.csv');
-load('df_nodes.mat');
-load('df_edges.mat');
 col_longitude = table2array(df_nodes(:, 'x'));                              % Actual x (longitude) coordinate from the nodes data
 col_latitude = table2array(df_nodes(:, 'y'));                               % Actual y (latitude) coordinate from the nodes data
 freq=table2array(df_nodes(:, 'street_count'));                          
@@ -236,3 +223,4 @@ ep=min(env_parameters.EPSILON,epsilon_nmw);
 time_2PPO;
 phase1_budget=mean(ep(:));
 safety_margin=mean(privacy_budget(:));
+
