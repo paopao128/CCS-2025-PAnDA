@@ -38,7 +38,7 @@ The source code for the artifact can be accessed via a persistent repository hos
 Commit-ID: d0a1f295db85889f91b6b6b08955c3bc2be8bf96
 
 ### Set up the environment
-The code was developed and tested using **MATLAB R2024a** with the **Optimization Toolbox** and **Statistics and Machine Learning Toolbox** installed. The toolboxes include the [**`linprog`**](https://www.mathworks.com/help/optim/ug/linprog.html) function for linear programming and the [**`randsample`**](https://www.mathworks.com/help/stats/randsample.html) function for random sample.
+The code was developed and tested using **MATLAB R2024b** with the **Optimization Toolbox** and **Statistics and Machine Learning Toolbox** installed. The toolboxes include the [**`linprog`**](https://www.mathworks.com/help/optim/ug/linprog.html) function for linear programming and the [**`randsample`**](https://www.mathworks.com/help/stats/randsample.html) function for random sample.
 
 
 ## Artifact Evaluation
@@ -51,18 +51,28 @@ The code was developed and tested using **MATLAB R2024a** with the **Optimizatio
 
 ### Experiments 
 
-The file **main.m** includes lines for running experiments on different datasets. Please first uncomment the corresponding line to select a dataset:
+The file **`main.m`** provides entry points for running experiments on different datasets.  
+To select a dataset, **uncomment the corresponding line**:
 
 ```matlab
-% run_artifact_rome;               % Rome dataset (uniform vehicle location distribution)
-% run_artifact_nyc;                % New York City dataset  (uniform vehicle location distribution)
-% run_artifact_london;             % London dataset  (uniform vehicle location distribution)
-% run_artifact_real_distribution;  % Rome dataset (real vehicle location distribution)
+% run_artifact_rome;               % Rome dataset (uniform vehicle distribution)
+% run_artifact_nyc;                % New York City dataset (uniform vehicle distribution)
+% run_artifact_london;             % London dataset (uniform vehicle distribution)
+% run_artifact_real_distribution;  % Rome dataset (real vehicle distribution)
 ```
 
-You can also specify the number of repeats by setting ...
+##### Configuring Repeats
+You can specify the number of experiment repetitions by setting the corresponding repeat parameter in the script (or in parameters.m, if exposed).
 
-After running completes, the following results will be displayed: 
+##### Program Workflow
+
+When executed, the program will:
+* Load the dataset from the dataset/ directory,
+* Use helper routines from the functions/ directory,
+* Apply parameters defined in parameters.m.
+
+##### Output
+After completion, the program will display the experimental results (e.g., console outputs and/or generated figures/tables, depending on the selected experiment).
 
 #### 1. Computation time of different algorithms 
 an example table: 
