@@ -67,7 +67,7 @@ After running completes, the following results will be displayed:
 #### 1. Table of Utility Loss
 This result support **Main result 1 (displayed in Table 2 and Table 3 in the paper)**: *"PAnDA-e, PAnDA-p, and PAnDA-l have higher computational time compared to EM and EM+BR, it outperforms optimization-based methods including LP, LP+CA, LP+BD, and LP+EM in terms of computation efficiency"*. 
 
-We would like to clarify that the exact computation times are **hard to reproduce** because they depend on factors beyond our control, such as hardware configuration, concurrent system load, operating system scheduling, library implementations, and randomness in the algorithm. Therefore, while relative scalability trends are consistent, absolute runtimes may vary across environments.
+We would like to clarify that the exact computation times are **hard to reproduce** because they depend on factors beyond our control, such as hardware configuration, concurrent system load, operating system scheduling, library implementations, and randomness in the algorithm. As a result, while the relative trends (e.g., scalability across datasets and methods) are consistent and reproducible, the absolute runtime values may vary across environments.
 
 #### 2. Table of Computation time 
 This result support **Main result 2**. 
