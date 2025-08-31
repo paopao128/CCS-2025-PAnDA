@@ -11,16 +11,6 @@ This repository contains the source code related to the methodologies and experi
 
 The file **`main.m`** implements the **PAnDA** algorithm (*Perturbation via Anchor-based Distributed Approximation*) proposed in the paper. PAnDA is a scalable framework for **metric differential privacy (mDP)** that reduces computational overhead by allowing each user to select a small set of **anchor records**. From these anchors, **surrogate perturbation vectors** are derived for data obfuscation. This anchor-based approximation enables efficient large-scale data perturbation while maintaining strong privacy–utility tradeoffs.
 
----
-
-The script also includes lines for running experiments on different datasets. Uncomment the corresponding line to select a dataset:
-
-```matlab
-% main_artifact_rome;               % Rome dataset (uniform vehicle location distribution)
-% main_artifact_nyc;                % New York City dataset  (uniform vehicle location distribution)
-% main_artifact_london;             % London dataset  (uniform vehicle location distribution)
-% main_artifact_real_distribution;  % Rome dataset (real vehicle location distribution)
-```
 
 ### Security/Privacy Issues and Ethical Concerns
 There are no security or ethical concerns.
@@ -60,36 +50,29 @@ The code was developed and tested using **MATLAB R2024a** with the **Optimizatio
 *PAnDA-e*, *PAnDA-p*, and *PAnDA-l* achieve lower *utility loss* compared to *EM*, *LP+CA*, and *EM+BR* (described in the first paragraph of **Section 4.3.2**). 
 
 ### Experiments 
-#### Experiment 1: Computation time
-This experiment is conduct to support the **Main Result 1**. 
 
-To run the ***simplified version*** of the experiment, please run the following code 
-```bash
-simplified_experiment
+The file **main.m** includes lines for running experiments on different datasets. Please first uncomment the corresponding line to select a dataset:
+
+```matlab
+% main_artifact_rome;               % Rome dataset (uniform vehicle location distribution)
+% main_artifact_nyc;                % New York City dataset  (uniform vehicle location distribution)
+% main_artifact_london;             % London dataset  (uniform vehicle location distribution)
+% main_artifact_real_distribution;  % Rome dataset (real vehicle location distribution)
 ```
-and the results are stored in the MAT file "computation_time.mat". The computation time of should be around 1.20 to 1.50 seconds. The experiment takes approximately 2-3 minutes. 
 
-To run the original experiment, please run the following code 
-```bash
-main
-```
-and the results are stored in the MAT file "computation_time.mat". The computation time of should be around 1.20 to 1.50 seconds. Note that, to run the original experiment, it takes longer time since the server needs to calculate the cost reference table. The variable "NR_LOC" is changed from 1 to 4, and each experiment needs to be repeated for 20 times. It takes approximately 3 days to complete this experiment. 
+You can also specify the number of repeats by setting ...
+
+After running completes, the following results will be displayed: 
+
+### 1. Table of Utility Loss
+This result support **Main result 1**. 
 
 
-#### Experiment 2: Cost
-This experiment is conduct to support the **Main Result 2**. 
+### 2. Table of Computation time 
+This result support **Main result 2**. 
 
-To run the ***simplified version*** of the experiment, run the following code 
-```bash
-simplified_experiment
-```
-and the results are stored in the MAT file "cost.mat". The cost value should be up to approximately 380 meters (or 0.38 kilometers). The experiment takes approximately 2-3 minutes. 
+### 2. Figure of xxx 
 
-To run the original experiment, please run the following code 
-```bash
-main
-```
-Similar to Experiment 1, the original experiment takes a longer time since the server needs to calculate the cost reference table. The variable "NR_LOC" is changed from 1 to 4, and each experiment needs to be repeated for 20 times. It takes approximately 3 days to complete this experiment. 
 
 ## Limitations
 The key outcome of our method—computation time (as shown in Table 1 and Figures 9(a) and 9(b))—is sensitive to changes in the running environment. While the exact results may not be fully consistent due to these variations, we expect the results to remain at a comparable level.
