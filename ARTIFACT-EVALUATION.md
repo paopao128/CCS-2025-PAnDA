@@ -64,14 +64,14 @@ You can also specify the number of repeats by setting ...
 
 After running completes, the following results will be displayed: 
 
-### 1. Table of Utility Loss
+#### 1. Table of Utility Loss
 This result support **Main result 1**. 
 
 
-### 2. Table of Computation time 
+#### 2. Table of Computation time 
 This result support **Main result 2**. 
 
-### 2. Figure of xxx 
+#### 2. Figure of xxx 
 
 
 ## Limitations
