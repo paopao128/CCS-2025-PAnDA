@@ -4,7 +4,7 @@ Paper title: **PAnDA: Rethinking Metric Differential Privacy Optimization at Sca
 
 Artifacts HotCRP Id: **92**
 
-Requested Badge: **Available**
+Requested Badge: **Artifacts Available**, **Artifacts Evaluated**, and **Results Reproduced**
 
 ## Description
 This repository contains the source code related to the methodologies and experiments presented in the paper titled **"PAnDA: Rethinking Metric Differential Privacy Optimization at Scale with Anchor-Based Approximation"**.
