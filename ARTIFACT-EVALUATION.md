@@ -57,7 +57,7 @@ The code was developed and tested using **MATLAB R2024a** with the **Optimizatio
 *PAnDA-e*, *PAnDA-p*, and *PAnDA-l* have higher computational time compared to *Exponential Mechanism (EM)* and *Bayesian Remapping (EM+BR)*, it outperforms optimization-based methods including *Linear Programming (LP)*, *Coarse Approximation of LP (LP+CA)*, *Benders Decomposition (LP+BD)*, and *ConstOPTMech (LP+EM)* in terms of *computation efficiency* (described in Section **4.3.1**). 
 
 #### Main Result 2: Utility loss (displayed in Table 4 and Table 5)
-LR-Geo significantly reduces the expected cost compared to Laplace and ExpMech (described in the first paragraph of Section 5.3.1). 
+*PAnDA-e*, *PAnDA-p*, and *PAnDA-l* achieve lower *utility loss* compared to *EM*, *LP+CA*, and *EM+BR* (described in the first paragraph of **Section 4.3.2**). 
 
 ### Experiments 
 #### Experiment 1: Computation time
