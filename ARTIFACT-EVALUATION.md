@@ -54,10 +54,10 @@ The code was developed and tested using **MATLAB R2024a** with the **Optimizatio
 The file **main.m** includes lines for running experiments on different datasets. Please first uncomment the corresponding line to select a dataset:
 
 ```matlab
-% main_artifact_rome;               % Rome dataset (uniform vehicle location distribution)
-% main_artifact_nyc;                % New York City dataset  (uniform vehicle location distribution)
-% main_artifact_london;             % London dataset  (uniform vehicle location distribution)
-% main_artifact_real_distribution;  % Rome dataset (real vehicle location distribution)
+% run_artifact_rome;               % Rome dataset (uniform vehicle location distribution)
+% run_artifact_nyc;                % New York City dataset  (uniform vehicle location distribution)
+% run_artifact_london;             % London dataset  (uniform vehicle location distribution)
+% run_artifact_real_distribution;  % Rome dataset (real vehicle location distribution)
 ```
 
 You can also specify the number of repeats by setting ...
