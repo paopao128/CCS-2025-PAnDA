@@ -67,15 +67,7 @@ After running completes, the following results will be displayed:
 #### 1. Table of Utility Loss
 This result support **Main result 1 (displayed in Table 2 and Table 3 in the paper): "*PAnDA-e*, *PAnDA-p*, and *PAnDA-l* have higher computational time compared to *Exponential Mechanism (EM)* and *Bayesian Remapping (EM+BR)*, it outperforms optimization-based methods including *Linear Programming (LP)*, *Coarse Approximation of LP (LP+CA)*, *Benders Decomposition (LP+BD)*, and *ConstOPTMech (LP+EM)* in terms of *computation efficiency*"**. 
 
-The computation time reported in our experiments (in Table 2) is **difficult to reproduce exactly**, as it depends on several factors that are inherently hard to control. These include:
-- **Hardware configuration** (e.g., CPU generation, number of cores, GPU model, memory size, and disk speed).  
-- **System load** at runtime (e.g., whether other processes or programs are running concurrently).  
-- **Operating system scheduling** policies, background services, and thread management.  
-- **Compiler and library implementations** (e.g., MATLAB optimization toolbox, BLAS/LAPACK versions).  
-- **Randomization in anchor selection** and other stochastic components of the algorithm, which can lead to slight variations in runtime.  
-
-As a result, while the relative trends (e.g., scalability across datasets and methods) are consistent and reproducible, the absolute runtime values may vary across environments.
-
+Exact computation times are **hard to reproduce** because they depend on factors beyond our control, such as hardware configuration, concurrent system load, operating system scheduling, library implementations, and randomness in the algorithm. Therefore, while relative scalability trends are consistent, absolute runtimes may vary across environments.
 
 #### 2. Table of Computation time 
 This result support **Main result 2**. 
