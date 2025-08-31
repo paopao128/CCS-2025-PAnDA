@@ -18,7 +18,7 @@ There are no security or ethical concerns.
 ## Basic Requirements
 ### **Recommended Hardware Requirements**
 - **Processor**: Dual-core CPU or higher
-- **Memory**: 8 GB RAM (16 GB recommended for larger datasets)
+- **Memory**: 64 GB RAM (16 GB recommended for larger datasets)
 - **Disk Space**: 2 GB of free space for MATLAB installation and artifact files
 
 ### **Supported Operating Systems**
