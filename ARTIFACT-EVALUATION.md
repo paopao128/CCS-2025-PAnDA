@@ -13,23 +13,23 @@ The file **`main.m`** implements the **PAnDA** algorithm (*Perturbation via Anch
 
 ### Directory Structure
 PAnDA artifact/
-├── README.md 
+* README.md 
 
-├── paper.pdf 
+* paper.pdf 
 
-├── run_artifact_london.m 
+* run_artifact_london.m 
 
-├── run_artifact_nyc.m 
+* run_artifact_nyc.m 
 
-├── run_artifact_rome.m 
+* run_artifact_rome.m 
 
-├── main_artifact_real_distribution 
+* main_artifact_real_distribution 
 
-├── functions/ 
+* functions/ 
 
-├── dataset/ 
+* dataset/ 
 
-└── parameters.m 
+* parameters.m 
 
 ### Security/Privacy Issues and Ethical Concerns
 There are no security or ethical concerns.
