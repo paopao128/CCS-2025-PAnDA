@@ -53,10 +53,10 @@ The code was developed and tested using **MATLAB R2024a** with the **Optimizatio
 
 ## Artifact Evaluation
 ### Main Results and Claims
-#### Main Result 1: Computation time (displayed as "LR-Geo" in Table 1)
-LR-Geo has higher computational time compared to Laplace and ExpMech, it significantly outperforms both LP and ConstOPT in terms of efficiency (described in the first paragraph of Section 5.2.1). 
+#### Main Result 1: Computation time (displayed in Table 2 and Table 3)
+*PAnDA-e*, *PAnDA-p*, and *PAnDA-l* have higher computational time compared to *Exponential Mechanism (EM)* and *Bayesian Remapping (EM+BR)*, it outperforms optimization-based methods including *Linear Programming (LP)*, *Coarse Approximation of LP (LP+CA)*, *Benders Decomposition (LP+BD)*, and *ConstOPTMech (LP+EM)* in terms of *computation efficiency* (described in Section **4.3.1**). 
 
-#### Main Result 2: Cost (displayed as "LR-Geo" in Table 2)
+#### Main Result 2: Utility loss (displayed in Table 4 and Table 5)
 LR-Geo significantly reduces the expected cost compared to Laplace and ExpMech (described in the first paragraph of Section 5.3.1). 
 
 ### Experiments 
