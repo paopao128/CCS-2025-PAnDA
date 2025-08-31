@@ -82,15 +82,9 @@ To select a dataset, **uncomment the corresponding line**:
 % run_artifact_real_distribution;  % Rome dataset (real vehicle distribution)
 ```
 
-##### Configuring Repeats
-You can specify the number of experiment repetitions by setting the corresponding repeat parameter in the script (or in parameters.m, if exposed).
+**Configuring Repeats**: You can specify the number of experiment repetitions by setting the corresponding repeat parameter in the script (or in parameters.m, if exposed).
 
-##### Program Workflow
-
-When executed, the program will:
-* Load the dataset from the dataset/ directory,
-* Use helper routines from the functions/ directory,
-* Apply parameters defined in parameters.m.
+**Program Workflow**: When executed, the program will (1) load the dataset from the *dataset/* directory, (2) use functions routines from the *functions/* directory, and (3) apply parameters defined in *parameters.m*.
 
 #### Output
 After completion, the program will display the experimental results (e.g., console outputs and/or generated figures/tables, depending on the selected experiment).
