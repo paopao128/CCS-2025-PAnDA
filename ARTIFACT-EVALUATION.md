@@ -1,4 +1,4 @@
-# Artifact Appendix
+# README 
 
 Paper title: **PAnDA: Rethinking Metric Differential Privacy Optimization at Scale with Anchor-Based Approximation**
 
