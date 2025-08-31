@@ -1,13 +1,13 @@
 # Artifact Appendix
 
-Paper title: **Time-Efficient Locally Relevant Geo-Location Privacy Protection**
+Paper title: **PAnDA: Rethinking Metric Differential Privacy Optimization at Scale with Anchor-Based Approximation**
 
-Artifacts HotCRP Id: **10**
+Artifacts HotCRP Id: **92**
 
 Requested Badge: **Available**
 
 ## Description
-This repository contains the source code related to the methodologies and experiments presented in the paper titled **"Time-Efficient Locally Relevant Geo-Location Privacy Protection"**.
+This repository contains the source code related to the methodologies and experiments presented in the paper titled **"PAnDA: Rethinking Metric Differential Privacy Optimization at Scale with Anchor-Based Approximation"**.
 
 The file **`main.m`** implements the data obfuscation algorithm **LR-Geo** proposed in the paper. This algorithm facilitates geo-obfuscation by focusing on locally relevant locations for each user, optimizing location privacy while maintaining computational efficiency through **linear programming (LP)**. It also incorporates the **Benders' decomposition technique** to efficiently solve large-scale LP problems, as discussed in the paper.
 
