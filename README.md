@@ -107,6 +107,6 @@ This result support **Main result 2 (displayed in Table 4 and Table 5 in the pap
 The exact utility loss values are **hard to reproduce** because the downstream tasks are randomly distributed, causing the measurements to vary across runs. However, the overall trend remains consistent: *PAnDA-e, PAnDA-p, and PAnDA-l achieve lower utility loss compared to EM, LP+CA, and EM+BR*, as reported in the paper.
 
 
-##### 3. Figure of xxx 
+#### 3. Figures xxxx
 
 
