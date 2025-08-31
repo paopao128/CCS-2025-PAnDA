@@ -9,9 +9,18 @@ Requested Badge: **Artifacts Available**, **Artifacts Evaluated**, and **Results
 ## Description
 This repository contains the source code related to the methodologies and experiments presented in the paper titled **"PAnDA: Rethinking Metric Differential Privacy Optimization at Scale with Anchor-Based Approximation"**.
 
-The file **`main.m`** implements the **PAnDA** algorithm (*Perturbation via Anchor-based Distributed Approximation*) proposed in the paper.
+The file **`main.m`** implements the **PAnDA** algorithm (*Perturbation via Anchor-based Distributed Approximation*) proposed in the paper. PAnDA is a scalable framework for **metric differential privacy (mDP)** that reduces computational overhead by allowing each user to select a small set of **anchor records**. From these anchors, **surrogate perturbation vectors** are derived for data obfuscation. This anchor-based approximation enables efficient large-scale data perturbation while maintaining strong privacy–utility tradeoffs.
 
-PAnDA is a scalable framework for **metric differential privacy (mDP)** that reduces computational overhead by allowing each user to select a small set of **anchor records**. From these anchors, **surrogate perturbation vectors** are derived for data obfuscation. This anchor-based approximation enables efficient large-scale data perturbation while maintaining strong privacy–utility tradeoffs. To further address the complexity of the optimization, the implementation applies **Benders’ decomposition**, which decomposes the large linear program into a master problem and subproblems, significantly improving scalability on large domains:contentReference[oaicite:0]{index=0}.
+---
+
+The script also includes lines for running experiments on different datasets. Uncomment the corresponding line to select a dataset:
+
+```matlab
+% main_artifact_rome;               % Rome dataset (uniform vehicle location distribution)
+% main_artifact_nyc;                % New York City dataset  (uniform vehicle location distribution)
+% main_artifact_london;             % London dataset  (uniform vehicle location distribution)
+% main_artifact_real_distribution;  % Rome dataset (real vehicle location distribution)
+
 
 ### Security/Privacy Issues and Ethical Concerns
 There are no security or ethical concerns.
