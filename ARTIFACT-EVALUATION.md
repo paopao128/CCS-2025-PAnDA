@@ -9,7 +9,9 @@ Requested Badge: **Artifacts Available**, **Artifacts Evaluated**, and **Results
 ## Description
 This repository contains the source code related to the methodologies and experiments presented in the paper titled **"PAnDA: Rethinking Metric Differential Privacy Optimization at Scale with Anchor-Based Approximation"**.
 
-The file **`main.m`** implements the data obfuscation algorithm **LR-Geo** proposed in the paper. This algorithm facilitates geo-obfuscation by focusing on locally relevant locations for each user, optimizing location privacy while maintaining computational efficiency through **linear programming (LP)**. It also incorporates the **Benders' decomposition technique** to efficiently solve large-scale LP problems, as discussed in the paper.
+The file **`main.m`** implements the **PAnDA** algorithm (*Perturbation via Anchor-based Distributed Approximation*) proposed in the paper.
+
+PAnDA is a scalable framework for **metric differential privacy (mDP)** that reduces computational overhead by allowing each user to select a small set of **anchor records**. From these anchors, **surrogate perturbation vectors** are derived for data obfuscation. This anchor-based approximation enables efficient large-scale data perturbation while maintaining strong privacy–utility tradeoffs. To further address the complexity of the optimization, the implementation applies **Benders’ decomposition**, which decomposes the large linear program into a master problem and subproblems, significantly improving scalability on large domains:contentReference[oaicite:0]{index=0}.
 
 ### Security/Privacy Issues and Ethical Concerns
 There are no security or ethical concerns.
