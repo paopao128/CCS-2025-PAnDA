@@ -23,13 +23,15 @@ PAnDA artifact/
 
 * run_artifact_rome.m 
 
-* main_artifact_real_distribution 
+* main_artifact_real_distribution.m
+
+* parameters.m 
 
 * functions/ 
 
 * dataset/ 
 
-* parameters.m 
+
 
 ### Security/Privacy Issues and Ethical Concerns
 There are no security or ethical concerns.
