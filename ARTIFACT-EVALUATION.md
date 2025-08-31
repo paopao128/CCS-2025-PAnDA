@@ -51,17 +51,6 @@ Commit-ID: d0a1f295db85889f91b6b6b08955c3bc2be8bf96
 The code was developed and tested using **MATLAB R2024a** with the **Optimization Toolbox** and **Statistics and Machine Learning Toolbox** installed. The toolboxes include the [**`linprog`**](https://www.mathworks.com/help/optim/ug/linprog.html) function for linear programming and the [**`randsample`**](https://www.mathworks.com/help/stats/randsample.html) function for random sample.
 
 
-### Testing the Environment
-```bash
-simplified_experiment
-```
-for an simplified experiment 
-and 
-```bash
-main
-```
-for the original experiment
-
 ## Artifact Evaluation
 ### Main Results and Claims
 #### Main Result 1: Computation time (displayed as "LR-Geo" in Table 1)
