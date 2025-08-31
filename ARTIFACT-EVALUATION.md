@@ -11,6 +11,17 @@ This repository contains the source code related to the methodologies and experi
 
 The file **`main.m`** implements the **PAnDA** algorithm (*Perturbation via Anchor-based Distributed Approximation*) proposed in the paper. PAnDA is a scalable framework for **metric differential privacy (mDP)** that reduces computational overhead by allowing each user to select a small set of **anchor records**. From these anchors, **surrogate perturbation vectors** are derived for data obfuscation. This anchor-based approximation enables efficient large-scale data perturbation while maintaining strong privacy–utility tradeoffs.
 
+### 1.Artifact Description & Road Map for Evaluation
+CCS artifact/
+  ├── README.md  
+  ├── paper.pdf  
+  ├── main_artifact_london.m
+  ├── main_artifact_nyc.m
+  ├── main_artifact_rome.m
+  ├── functions/          
+  ├── dataset/      
+  └── parameters.m
+
 
 ### Security/Privacy Issues and Ethical Concerns
 There are no security or ethical concerns.
