@@ -14,13 +14,21 @@ The file **`main.m`** implements the **PAnDA** algorithm (*Perturbation via Anch
 ### Directory Structure
 PAnDA artifact/
 ├── README.md 
+
 ├── paper.pdf 
+
 ├── run_artifact_london.m 
+
 ├── run_artifact_nyc.m 
+
 ├── run_artifact_rome.m 
+
 ├── main_artifact_real_distribution 
+
 ├── functions/ 
+
 ├── dataset/ 
+
 └── parameters.m 
 
 ### Security/Privacy Issues and Ethical Concerns
