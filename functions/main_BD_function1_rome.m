@@ -21,9 +21,9 @@ env_parameters.NR_LOC = size(col_longitude, 1);
 
 %fprintf("The map information has been loaded. \n")
 [G, u, v] = graph_preparation(df_nodes, df_edges);               % Given the map information, create the mobility graph
-load('u.mat');
-load('v.mat');
-load('G.mat'); %fast
+%load('u.mat');
+%load('v.mat');
+%load('G.mat'); %fast
 
 %fprintf("The mobility graph has been created. \n \n")
 
@@ -223,4 +223,5 @@ ep=min(env_parameters.EPSILON,epsilon_nmw);
 time_2PPO;
 phase1_budget=mean(ep(:));
 safety_margin=mean(privacy_budget(:));
+
 
