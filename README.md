@@ -88,8 +88,18 @@ To select a dataset, **uncomment the corresponding line**:
 
 After completion, the program will display the experimental results (e.g., console outputs and/or generated figures/tables, depending on the selected experiment).
 
-#### 1. Computation time of different algorithms 
+#### 1. Utility loss of different algorithms 
 an example table: 
+
+xxxx
+
+This result support **Main result 2 (displayed in Table 4 and Table 5 in the paper)**: *PAnDA-e, PAnDA-p, and PAnDA-l achieve lower utility loss compared to EM, LP+CA, and EM+BR*. 
+
+The exact utility loss values are **hard to reproduce** because the downstream tasks are randomly distributed, causing the measurements to vary across runs. However, the overall trend remains consistent: *PAnDA-e, PAnDA-p, and PAnDA-l achieve lower utility loss compared to EM, LP+CA, and EM+BR*, as reported in the paper.
+
+
+#### 2. Computation time of different algorithms 
+An example table: 
 
 |                     |   500 |  1000 |  2000 |  3000 |  4000 |  5000 |
 |---------------------|------:|------:|------:|------:|------:|------:|
@@ -104,17 +114,5 @@ an example table:
 This result support **Main result 1 (displayed in Table 2 and Table 3 in the paper)**: *"PAnDA-e, PAnDA-p, and PAnDA-l have higher computational time compared to EM and EM+BR, it outperforms optimization-based methods including LP, LP+CA, LP+BD, and LP+EM in terms of computation efficiency"*. 
 
 We would like to clarify that the exact computation times are **hard to reproduce** because they depend on factors beyond our control, such as hardware configuration, concurrent system load, operating system scheduling, library implementations, and randomness in the algorithm. As a result, while the relative trends (e.g., scalability across datasets and methods) are consistent and reproducible, the absolute runtime values may vary across environments.
-
-#### 2. Utility loss of different algorithms 
-an example table: 
-
-xxxx
-
-This result support **Main result 2 (displayed in Table 4 and Table 5 in the paper)**: *PAnDA-e, PAnDA-p, and PAnDA-l achieve lower utility loss compared to EM, LP+CA, and EM+BR*. 
-
-The exact utility loss values are **hard to reproduce** because the downstream tasks are randomly distributed, causing the measurements to vary across runs. However, the overall trend remains consistent: *PAnDA-e, PAnDA-p, and PAnDA-l achieve lower utility loss compared to EM, LP+CA, and EM+BR*, as reported in the paper.
-
-
-#### 3. Figures xxxx
 
 
