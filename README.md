@@ -88,7 +88,7 @@ NR_REPEAT = 1;
 
 After completion, the program will display the experimental results (e.g., console outputs and/or generated figures/tables, depending on the selected experiment).
 
-Note that, when running **`run_artifact_rome.m`**, **`run_artifact_nyc.m`**, **`run_artifact_london.m`**, or **`run_artifact_real_distribution.m`**, the methods *PAnDA-e*, *PAnDA-p*, *PAnDA-l*, *EM*, *EM+BR*, *LP+CA*, and *LP* are executed automatically. Because LP+EM and LP+BD incur much higher computation time and fail to return results when the number of records is ≥ 1,000, they must be run separately using **`run_LPEM.m`** and **`run_LPBD.m`** or **uncomment the corresponding line** in **`main.m`**: 
+Note that, when running **`run_artifact_rome.m`**, **`run_artifact_nyc.m`**, **`run_artifact_london.m`**, or **`run_artifact_real_distribution.m`**, the methods *PAnDA-e*, *PAnDA-p*, *PAnDA-l*, *EM*, *EM+BR*, *LP+CA*, and *LP* are executed automatically. Because LP+EM and LP+BD incur much higher computation time and fail to return results when the number of records is ≥ 1,000, they must be run separately using **`run_LPEM.m`** and **`run_LPBD.m`** or **uncomment the corresponding lines** in **`main.m`**: 
 
 ```matlab
 % run_LPEM
