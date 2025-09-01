@@ -1,0 +1,347 @@
+addpath('./functions/'); 
+addpath('./functions/haversine'); 
+
+%% Parameters
+NEIGHBOR_THRESHOLD = 2.00; 
+NR_AGENT = 25;
+NR_OBFLOC = 200; 
+NR_TASK = 1;
+ALPHA = 100;
+EPSILON = 15.0;
+SCALE = 20; 
+NR_NODE_IN_TARGET = 500; 
+
+
+
+%% Main part
+opts = detectImportOptions('./Dataset/rome/raw/nodes_rome.csv');
+opts = setvartype(opts, 'osmid', 'int64');
+df_nodes = readtable('./Dataset/rome/raw/nodes_rome.csv', opts);
+df_edges = readtable('./Dataset/rome/raw/edges_rome.csv');
+load('./Dataset/rome/raw/trace_taxi_sample_rome.mat');
+
+
+%% Graph Preparation 
+% Description
+    % This step mainly focuses on creating the graph from all the shenzhen at further graph based operation such computing
+    % pathways among nodes, deducing travel time among nodes, etc. can be performed using this graph
+% Input
+    % df_nodes: Openstreet map nodes details
+    % df_edges: Openstreet map edges details
+
+% Ouput
+    % G: Graph G corresponding to all openstreet map dataset/shenzhen map nodes
+    % u: Array of startpoints of edges in graph.
+    % v: Array of endpoints of edges in graph.
+    % timeTaken: Array of travel time among each edge in the graph.
+[G, u, v, timeTaken] = graph_preparation(df_nodes, df_edges);
+% disp("graph_preparation function took below time for execution")
+
+% Extract the column as an array
+col_x = table2array(df_nodes(:, 'x'));  % Actual x coordinate from the nodes data
+col_y = table2array(df_nodes(:, 'y'));  % Actual y coordinate from the nodes data
+col_osmid = table2array(df_nodes(:, 'osmid'));  % Actual unique osmid from the nodes data
+NR_LOC = size(col_x, 1); 
+
+%% Determine the target region
+max_x = max(col_x);
+min_x = min(col_x);
+X_SIZE = max_x - min_x; 
+max_y = max(col_y);
+min_y = min(col_y);
+Y_SIZE = max_y - min_y; 
+
+TARGET_X_MAX = min_x + X_SIZE/SCALE + (X_SIZE+X_SIZE/SCALE)/2; 
+TARGET_X_MIN = min_x + X_SIZE/SCALE + (X_SIZE-X_SIZE/SCALE)/2;
+TARGET_Y_MAX = min_y + (Y_SIZE+Y_SIZE/SCALE)/2; 
+TARGET_Y_MIN = min_y + (Y_SIZE-Y_SIZE/SCALE)/2; 
+
+%% Find the set of nodes in the target region
+% node_in_target = nodeInTarget(col_x, col_y, TARGET_X_MAX, TARGET_X_MIN, TARGET_Y_MAX, TARGET_Y_MIN); 
+
+% node_in_target = randperm(NR_LOC, NR_NODE_IN_TARGET); 
+load('.\Dataset\rome\intermediate\node_in_target.mat'); 
+
+NR_NODE_IN_TARGET = size(node_in_target, 2); 
+loc_x_in_target = col_x(node_in_target); 
+loc_y_in_target = col_y(node_in_target); 
+
+%% Perturbed locations are randomly distributed over the target region
+obf_loc = randperm(size(node_in_target, 2), NR_OBFLOC); 
+
+%% Find the adjacence matrix of inter-set nodes and intra-set nodes
+adjacence_matrix_intraset = zeros(NR_NODE_IN_TARGET, NR_NODE_IN_TARGET); 
+adjacence_matrix_interset = zeros(NR_NODE_IN_TARGET, NR_NODE_IN_TARGET); 
+
+
+%% Distance matrix calculation
+% Calculate the distance between each pair of locations and create the
+% distance matrix D
+% distance_matrix = distanceMatrix(col_x(node_in_target), col_y(node_in_target)); 
+load('.\Dataset\rome\intermediate\distance_matrix.mat');
+adjacence_matrix = heaviside(1 - distance_matrix/NEIGHBOR_THRESHOLD); 
+
+%% Create the task location
+task_loc = randperm(size(node_in_target, 2), NR_TASK); 
+
+% Calculate the cost matrix 
+% cost_matrix = costMatrix(node_in_target, task_loc, obf_loc, G); 
+load('.\Dataset\rome\intermediate\cost_matrix.mat'); 
+
+%% Create the agents
+% ------------------------ Cluster the data
+% cluster_idx = spectralcluster(distance_matrix, NR_AGENT, 'Distance', 'precomputed'); 
+% cluster_idx = kmeans(distance_matrix, NR_AGENT); 
+% cluster_rnd_idx = randperm(NR_AGENT); 
+% cluster_idx = gridclustering(loc_x_in_target, loc_y_in_target, cluster_rnd_idx, (TARGET_X_MAX-TARGET_X_MIN), ...
+%     TARGET_X_MIN, (TARGET_Y_MAX-TARGET_Y_MIN), TARGET_Y_MIN, sqrt(NR_AGENT), sqrt(NR_AGENT)); 
+
+load('.\Dataset\rome\intermediate\cluster_idx.mat'); 
+
+% XYCoords = [loc_x_in_target'; loc_y_in_target']; 
+% gplot(adjacence_matrix, [loc_x_in_target'; loc_y_in_target']'); 
+% hold on; 
+% scatter(loc_x_in_target, loc_y_in_target, [], cluster_idx, 'filled'); 
+
+
+% ---------------------- Initialize the agents
+for i = 1:1:NR_AGENT
+    agent(i) = struct(  'idx', i, ...
+                        'node', [], ...
+                        'node_intraset', [], ...
+                        'node_interset', [], ...
+                        'cost_vector', [], ...
+                        'intraset', [], ...
+                        'interset', [], ... 
+                        'new_cut_A_bounded', [], ...
+                        'new_cut_b_bounded', 0, ...
+                        'new_cut_A_unbounded', [], ...
+                        'new_cut_b_unbounded', 0, ...
+                        'GeoI', [], ...
+                        'decision', [], ...
+                        'isunbounded', 0, ...
+                        'isupdated', 0, ...
+                        'upperbound', 9999, ...
+                        'extremerays', [], ... 
+                        'z', 0); 
+end
+
+for i = 1:1:size(node_in_target, 2)
+    agent(cluster_idx(i, 1)).node = [agent(cluster_idx(i, 1)).node, i];
+end
+
+% ------- Determine the inter-set nodes and intra-set nodes for each agent
+[idx_i, idx_j, ~] = find(adjacence_matrix);  
+for l = 1:1:size(idx_i, 1) 
+    if cluster_idx(idx_i(l, 1)) == cluster_idx(idx_j(l, 1))
+        % Find the intra set nodes for each agent
+        agent(cluster_idx(idx_i(l, 1))).intraset = [agent(cluster_idx(idx_i(l, 1))).intraset; [idx_i(l, 1), idx_j(l, 1)]];
+        adjacence_matrix_intraset(idx_i(l, 1), idx_j(l, 1)) = 1; 
+    else
+        % Find the inter set nodes for each agent
+        agent(cluster_idx(idx_i(l, 1))).interset = [agent(cluster_idx(idx_i(l, 1))).interset; [idx_i(l, 1), idx_j(l, 1)]];
+        adjacence_matrix_interset(idx_i(l, 1), idx_j(l, 1)) = 1; 
+        if size(find(agent(cluster_idx(idx_i(l, 1))).node_interset == idx_j(l, 1)), 2) == 0
+            agent(cluster_idx(idx_i(l, 1))).node_interset = [agent(cluster_idx(idx_i(l, 1))).node_interset, idx_i(l, 1)];
+        end
+    end
+end
+
+for i = 1:1:NR_AGENT
+    agent(i).node = unique(agent(i).node); 
+    agent(i).node_interset = unique(agent(i).node_interset); 
+    agent(i).node_intraset = unique(setdiff(agent(i).node, agent(i).node_interset));
+end
+
+
+% Find the whole set of inter-set nodes
+node_interset = find(sum(adjacence_matrix_interset)/max(sum(adjacence_matrix_interset))>0);
+NR_NODE_INTERSET = size(node_interset, 2);
+% Find the whole set of intra-set nodes
+node_intraset = find(sum(adjacence_matrix_interset)/max(sum(adjacence_matrix_interset))==0);
+NR_NODE_INTRASET = size(node_intraset, 2);
+% G_interset = graph(adjacence_matrix_interset); 
+% [bins,binsizes] = conncomp(G_interset); 
+
+
+%% Draw the intra set edges
+% scatter(loc_x_in_target, loc_y_in_target, [], cluster_idx); 
+% hold on; 
+% gplot(adjacence_matrix_intraset, [loc_x_in_target'; loc_y_in_target']'); 
+
+%% Draw the inter set edges
+% gplot(adjacence_matrix_interset, [loc_x_in_target'; loc_y_in_target']'); 
+% hold on; 
+% scatter(loc_x_in_target, loc_y_in_target, [], cluster_idx); 
+
+
+%% Initialize the master agent
+masteragent = struct(  'node', node_interset, ...
+                       'cost_vector', [], ...
+                       'adjacence_matrix_interset', [], ...
+                       'GeoI', [], ...
+                       'decision', [], ...
+                       'cuts_A', [], ...
+                       'cuts_b', []);
+masteragent.adjacence_matrix_interset = adjacence_matrix_interset;
+masteragent = creatMasterGeoI(masteragent, distance_matrix, NR_OBFLOC, EPSILON);
+% load('.\Dataset\rome\intermediate\masteragent.mat'); 
+
+% for i = 1:1:NR_AGENT
+% %    i
+%     agent(i) = creatSubGeoI(agent(i), distance_matrix, NR_OBFLOC, EPSILON); 
+% end
+load('.\Dataset\rome\intermediate\agent.mat'); 
+
+%% Algorithm starts!!
+ITER = 100; 
+
+[~, ~, lowerboundRL, upperboundRL] = extremeCollection(masteragent, agent, cost_matrix, node_interset, NR_OBFLOC, NR_AGENT, NR_NODE_IN_TARGET, NR_NODE_INTERSET, ITER); 
+
+% [~, ~, lowerbound, upperbound, upperbound_] = bendersDecomposition(masteragent, agent, cost_matrix, node_interset, NR_OBFLOC, NR_AGENT, NR_NODE_IN_TARGET, NR_NODE_INTERSET, ITER); 
+
+% [~, ~, lowerboundRL, upperboundRL] = bendersDecompositionRL(masteragent, agent, cost_matrix, node_interset, NR_OBFLOC, NR_AGENT, NR_NODE_IN_TARGET, NR_NODE_INTERSET, ITER); 
+
+
+% Z = integrateZ(agent, NR_AGENT, NR_NODE_IN_TARGET, NR_OBFLOC); 
+% Start the iterations
+
+z_difference = zeros(ITER, NR_AGENT); 
+nr_vialtions = zeros(ITER, NR_AGENT); 
+
+
+% while iter <= ITER
+%     for i = 1:1:NR_AGENT
+%         [iter i] 
+%         if size(agent(i).node,2) > 0
+%             [agent(i), z_difference(iter, i), nr_vialtions(iter, i)] = agentLP(agent(i), distance_matrix, cost_matrix, NR_OBFLOC, Z, EPSILON, ALPHA); 
+%         end
+%     end
+%     Z = integrateZ(agent, NR_AGENT, NR_NODE_IN_TARGET, NR_OBFLOC);
+%     iter = iter+1; 
+% end
+
+
+
+%% Pre-Processing of the taxi trajectory dataset
+% Description
+    % This function to read the taxi trajectory dataset, then to compute the approximate nodes corresponding to openstreet map.
+    % The computed approximate nodes will be returned particular format,
+    % where first column is nodes, and second column is time stamps.
+    % Furthermore, this function returns variable traject_coord which
+    % contains x and y coordinates of computed approximate nodes.
+% Input
+    % df_nodes: Openstreet map nodes details
+    % vehicle_trace: Structure containing the trajectory data
+    
+% Ouput
+    % trajectories: Matrix which contains trajectory nodes in first column and timestamps in second column
+    % traject_coord: Matrix which contains x and y coordinates of trajectory nodes
+    % Qiu: Comment here and use the stored data. 
+% tic
+% [trajectories, traject_coord] = preprocessing_dataset(df_nodes, vehicle_trace);
+% disp("preprocessing_dataset function took below time for execution")
+% toc
+load('./Dataset/rome/raw//traject_coord_approx.mat');
+load('./Dataset/rome/raw//trajectories_approx.mat'); 
+
+
+
+%% Making the loaded trajectories consistent in terms of time stamps
+% Description
+    % The preprocessing_file function is defined to convert the
+    % base trajectories into consistent trajectories based on openstreet
+    % map based graph considering time stamps as major field or
+    % charaterstics. 
+% Input
+    % trajectories: Matrix which contains trajectory nodes in first column and timestamps in second column. Baseline trajectories 
+                    % which are computed from taxi sample dataset
+    % traject_coord: Matrix which contains x and y coordinates of trajectory nodes
+    % G: Graph preapred from openstreet map
+    % col_x: all x coordinates of nodes of graph G
+    % col_y: all y coordinates of nodes of graph G
+% Ouput
+    % new_trajectories: Matrix which contains updated trajectory nodes in first column and updated timestamps in second column which 
+                    % are more consistent in terms of time stamp.
+    % new_traject_coord: Matrix which contains x and y coordinates of updated trajectory nodes
+tic
+    % [new_trajectories, new_traject_coord] = make_trajectories_consistent(trajectories, traject_coord, G, col_x, col_y, time_interval);
+    load('.\Dataset\rome_taxicab\traject_coord_approx_time.mat'); 
+    load('.\Dataset\rome_taxicab\trajectories_approx_time.mat'); 
+    [new_trajectories, new_traject_coord] = make_trajectories_consistent_qiu(new_trajectories, new_traject_coord, time_interval);
+    disp("make_trajectories_consistent function took below time for execution")
+toc
+
+
+%% Obfuscation of Nodes
+% Description
+    % This step obfuscates all the deduced trajectory nodes
+% Input
+    % df_nodes: It contains dataset retrieved from openstreet map; All nodes of Shenzhen Map
+    % new_trajectories{1,1}: Array of node ids from trajectory nodes which needs to be obfuscated
+% Ouput
+    % all_obf_loc: Array of obfuscated nodes corresponding to trajectory nodes
+    
+tic
+all_obf_loc = obfuscation(df_nodes, new_trajectories{1,1});
+disp("obfuscation function took below mentioned time for execution");
+toc
+
+
+%% Loss calculation based on obfuscated nodes
+% Description
+    % In this step mainly loss is calculated corresponding to all computed obfuscated nodes
+% Input
+    % df_nodes: It contains dataset retrieved from openstreet map; All nodes of Shenzhen Map
+    % new_trajectories{1,1}: Array of node ids of nodes closest to the trajectory nodes
+    % all_obf_loc: Array of obfuscated nodes corresponding to trajectory nodes
+    % col_x: all x coordinates of nodes of graph G
+    % col_y: all y coordinates of nodes of graph G
+% Ouput
+    % loss: Array of loss between real trajectory nodes and obfuscated trajectory nodes
+    
+tic    
+loss = loss_calculation(df_nodes, new_trajectories{1,1}, all_obf_loc, col_x, col_y);
+disp("loss_calculation function took below mentioned time for execution");
+toc
+
+
+%% Step 1: Find the set of locations reachable in the current time slot
+% Description
+    % This function will give all the nodes/location reachable from given location v in given time interval [t,t'].
+    % Suppose we need to find all the reachable nodes from node 1 within time frame [0, 13]
+% Input
+    % G: Graph G corresponding to all openstreet map dataset/shenzhen map nodes
+    % v: location/node ID from which all reachable needs to be deduced
+    % t: Lower bound of the time interval
+    % t': Upper Bound of the time interval
+% Ouput
+    % reachable_nodes: Array of all the reachable nodes/locations from given location v in timeframe [t,t']. For this example the result
+                     % will contain all the nodes/location reachable from node id 1 in [0,13] units of time
+    % shortDist: Array of travel time reaching from v to all the reachable nodes
+    % shortPaths: Array of all shortest path from v to reach all the reachable nodes
+                     
+tic                     
+[reachable_nodes, shortDist, shortPaths] = get_reachable_nodes(G, 1, 0, 13);
+disp("get_reachable_nodes function took below mentioned time for execution");
+toc
+
+
+%% Plot all the reachable paths deduced in previous step
+% Description
+    % This step of script plots all the reachable paths computed from get_reachable_nodes function.
+% Input
+    % G: Graph G corresponding to all openstreet map dataset/shenzhen map nodes
+    % shortPaths: Array of shortest path from v to reach all the reachable nodes; deduced from get_reachable_nodes function
+% Output
+    % plt: Plot of the graph
+tic
+plt = plot_reachable_paths(G, shortPaths(1));
+disp("plot_reachable_paths function took below mentioned time for execution");
+toc
+
+
+%% Step 2: Use Bayes' formula to identify the range of the current location (single location)
+
+
+%% Step 3: Variational inference
