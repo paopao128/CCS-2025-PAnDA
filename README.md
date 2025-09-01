@@ -90,8 +90,6 @@ Note that, when running **`run_artifact_rome.m`**, **`run_artifact_nyc.m`**, **`
 env_parameters.NR_NODE_IN_TARGET = 500;    % The number records is 500
 ```
 
-env_parameters.NR_NODE_IN_TARGET=500;
-
 #### 1. Utility loss of different algorithms 
 an example table: 
 
