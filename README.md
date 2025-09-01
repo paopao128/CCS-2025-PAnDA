@@ -7,7 +7,7 @@ Artifacts HotCRP Id: **92**
 Requested Badge: **Artifacts Available**, **Artifacts Evaluated**, and **Results Reproduced**
 
 ## Description
-This repository contains the source code related to the methodologies and experiments presented in the paper titled **"PAnDA: Rethinking Metric Differential Privacy Optimization at Scale with Anchor-Based Approximation"**.
+This repository contains the source code related to the methodologies and experiments presented in the paper titled **"PAnDA: Rethinking Metric Differential Privacy Optimization at Scale with Anchor-Based Approximation"**. 
 
 The file **`main.m`** implements the **PAnDA** algorithm (*Perturbation via Anchor-based Distributed Approximation*) proposed in the paper. PAnDA is a scalable framework for **metric differential privacy (mDP)** that reduces computational overhead by allowing each user to select a small set of **anchor records**. From these anchors, **surrogate perturbation vectors** are derived for data obfuscation. This anchor-based approximation enables efficient large-scale data perturbation while maintaining strong privacy–utility tradeoffs.
 
@@ -47,11 +47,6 @@ There are no security or ethical concerns.
 - **macOS Monterey/Ventura**
 - **Ubuntu Linux 20.04/22.04**
 
-### Estimated Time and Storage Consumption
-Provide an estimated value for the time the evaluation will take and the space on the disk it will consume. 
-This helps reviewers to schedule the evaluation in their time plan and to see if everything is running as intended.
-More specifically, a reviewer, who knows that the evaluation might take 10 hours, does not expect an error if, after 1 hour, the computer is still calculating things.
-
 ## Environment 
 
 ### Accessibility
@@ -81,6 +76,7 @@ To select a dataset, **uncomment the corresponding line**:
 % run_artifact_london;             % London dataset (uniform vehicle distribution)
 % run_artifact_real_distribution;  % Rome dataset (real vehicle distribution)
 ```
+The estimated running time for each "run_artifact_rome", "run_artifact_nyc", "run_artifact_london", and "run_artifact_real_distribution" is approximated one hour. 
 
 **Configuring Repeats**: You can specify the number of experiment repetitions by setting the corresponding repeat parameter in the script (or in parameters.m, if exposed).
 
