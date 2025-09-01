@@ -91,7 +91,15 @@ After completion, the program will display the experimental results (e.g., conso
 #### 1. Utility loss of different algorithms 
 an example table: 
 
-xxxx
+|                     |   500 |  1000 |  2000 |  3000 |  4000 |  5000 |
+|---------------------|------:|------:|------:|------:|------:|------:|
+| EM                  | 1145.23 | 1213.73 | 1299.94 | 1302.19 | 1298.98 | 1216.03 |
+| LP+CA               | 2062.99 | 2090.67 | 2144.92 | 2177.80 | 2143.94 | 2191.52 |
+| EM+BR               |  995.68 | 1077.88 | 1146.57 | 1166.26 | 1181.26 | 1096.89 |
+| loss(PAnDA-e)       |  318.53 |  275.24 |  316.43 |  306.87 |  269.99 |  183.67 |
+| loss(PAnDA-p)       |  214.11 |  242.65 |  272.16 |  264.05 |  249.51 |  208.51 |
+| loss(PAnDA-l)       |  230.74 |  249.51 |  308.08 |  260.68 |  265.62 |  274.21 |
+
 
 This result support **Main result 2 (displayed in Table 4 and Table 5 in the paper)**: *PAnDA-e, PAnDA-p, and PAnDA-l achieve lower utility loss compared to EM, LP+CA, and EM+BR*. 
 
