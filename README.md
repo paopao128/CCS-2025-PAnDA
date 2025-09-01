@@ -76,7 +76,7 @@ To select a dataset, **uncomment the corresponding line**:
 % run_artifact_london;             % London dataset (uniform vehicle distribution)
 % run_artifact_real_distribution;  % Rome dataset (real vehicle distribution)
 ```
-The estimated running time for each "run_artifact_rome", "run_artifact_nyc", "run_artifact_london", and "run_artifact_real_distribution" is approximated one hour. 
+The estimated running time for each **`run_artifact_rome.m`**, **`run_artifact_nyc.m`**, **`run_artifact_london.m`**, and **`run_artifact_real_distribution.m`** is approximated one hour. 
 
 **Configuring Repeats**: You can specify the number of experiment repetitions by setting the corresponding repeat parameter in the script (or in parameters.m, if exposed).
 
