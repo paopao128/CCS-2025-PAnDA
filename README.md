@@ -78,7 +78,11 @@ To select a dataset, **uncomment the corresponding line**:
 ```
 The estimated running time for each **`run_artifact_rome.m`**, **`run_artifact_nyc.m`**, **`run_artifact_london.m`**, and **`run_artifact_real_distribution.m`** is approximated one hour. 
 
-**Configuring Repeats**: You can specify the number of experiment repetitions by setting the corresponding repeat parameter in the script (or in parameters.m, if exposed).
+**Configuring Repeats**: You can specify the number of experiment repetitions by setting the corresponding repeat parameter in **`main.m`**: 
+
+```matlab
+NR_REPEAT = 1; 
+```
 
 **Program Workflow**: When executed, the program will (1) load the dataset from the *dataset/* directory, (2) use functions routines from the *functions/* directory, and (3) apply parameters defined in *parameters.m*.
 
