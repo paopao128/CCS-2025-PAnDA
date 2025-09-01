@@ -91,7 +91,15 @@ After completion, the program will display the experimental results (e.g., conso
 #### 1. Computation time of different algorithms 
 an example table: 
 
-xxxx
+|                     |   500 |  1000 |  2000 |  3000 |  4000 |  5000 |
+|---------------------|------:|------:|------:|------:|------:|------:|
+| EM                  | <=0.005 | <=0.005 | <=0.005 | <=0.005 | <=0.005 | <=0.005 |
+| LP+CA               | 112.91 | 114.97 | 128.98 | 138.30 | 161.96 | 160.45 |
+| EM+BR               |   0.02 |   0.05 |   0.17 |   0.42 |   1.40 |   3.15 |
+| PAnDA-e             |   0.33 |   0.67 |   0.83 |   1.17 |   1.58 |   1.57 |
+| PAnDA-p             |   0.48 |   0.42 |   0.50 |   0.89 |   0.85 |   0.85 |
+| PAnDA-l             |   0.62 |   0.75 |   1.17 |   1.16 |   1.52 |   1.30 |
+
 
 This result support **Main result 1 (displayed in Table 2 and Table 3 in the paper)**: *"PAnDA-e, PAnDA-p, and PAnDA-l have higher computational time compared to EM and EM+BR, it outperforms optimization-based methods including LP, LP+CA, LP+BD, and LP+EM in terms of computation efficiency"*. 
 
